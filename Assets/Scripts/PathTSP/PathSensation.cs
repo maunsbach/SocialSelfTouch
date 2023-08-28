@@ -6,8 +6,6 @@ using System.Collections.Generic;
 
 public class PathSensation : MonoBehaviour
 {
-    public bool AverageAlignmentOn;
-    public Vector3 AverageAlignment = new Vector3(1.1786f, 1.0461f, -0.0612f);
     public Vector3 CenterPoint = new Vector3(0f, 0f, 0.2f);
     private Ultraleap.Haptics.Transform KitTransform;
 
@@ -25,13 +23,14 @@ public class PathSensation : MonoBehaviour
 
     void Start()
     {
-        AverageAlignment -= CenterPoint;
-
         using Library lib = new Library();
         lib.Connect();
-        using IDevice device = lib.FindDevice();
+        // Receiver: "USX:00000705"
+        // Sender: "USX:000008DB"
+        using IDevice device = lib.FindDevice("USX:00000705");
         _emitter = new StreamingEmitter(lib);
         _emitter.Devices.Add(device);
+        Debug.Log(device.Identifier);
 
         _transform = device.GetKitTransform();
 
@@ -69,29 +68,21 @@ public class PathSensation : MonoBehaviour
         {
             foreach (var sample in interval)
             {
-
-                if (AverageAlignmentOn)
-                {
-                    x = _path[_pointIncrement].x - AverageAlignment.x;
-                    y = _path[_pointIncrement].y - AverageAlignment.y;
-                    z = _path[_pointIncrement].z - AverageAlignment.z;
-                }
-                else
-                {
-                    x = _path[_pointIncrement].x;
-                    y = _path[_pointIncrement].y;
-                    z = _path[_pointIncrement].z;
-                }
-
+                x = _path[_pointIncrement].x;
+                y = _path[_pointIncrement].y;
+                z = _path[_pointIncrement].z;
 
                 var p = new SVector3(x, y, z);
 
-                p = _transform.TransformPosition(p);
+                //p = _transform.TransformPosition(p);
 
-                //Debug.Log("Post: " + x + ", " + y + ", " + z);
+                //Debug.Log("Pre: " + x + ", " + y + ", " + z);
+                //Debug.Log("Post: " + p.X + ", " + p.Y + ", " + p.Z);
+                p = new SVector3(0f, 0f, 0.2f);
 
                 sample.Points[0].Position = p;
                 sample.Points[0].Intensity = Intensity;
+                //sample.Points[0].Intensity = 0.5f * Mathf.Sin(_pointIncrement*0.05f) + 0.5f;
 
                 _pointIncrement++;
                 if (_pointIncrement == _path.Count)

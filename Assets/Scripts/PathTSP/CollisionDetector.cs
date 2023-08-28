@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CollisionDetector : MonoBehaviour
 {
+    public Transform ReceiverServiceProvider;
+
     private PathRenderingController _pathRenderingController;
     private PathRecorder _pathRecorder;
 
@@ -43,6 +45,10 @@ public class CollisionDetector : MonoBehaviour
 
     private void SendContactPoints()
     {
+        /*if (_contactPoints.Values.Count > 0)
+        {
+            Debug.Log(_contactPoints.Values.Count);
+        }*/
         _pathRenderingController.SetPoints(_contactPoints.Values.ToList());
         //_pathRecorder.SetPoints(_contactIDs.Values.ToArray(), _sampleTime);
         _sampleTime++;
@@ -50,6 +56,7 @@ public class CollisionDetector : MonoBehaviour
 
     public void AddContactPoint(int otherID, Vector3 point, SphereID sphereID)
     {
+        point = point - ReceiverServiceProvider.position;
         if (_contactPoints.ContainsKey(otherID))
         {
             if (_contactPointCount.ContainsKey(otherID))
@@ -71,6 +78,7 @@ public class CollisionDetector : MonoBehaviour
 
     public void AddContactPoint(int otherID, Vector3 point)
     {
+        point = point - ReceiverServiceProvider.position;
         if (_contactPoints.ContainsKey(otherID))
         {
             if (_contactPointCount.ContainsKey(otherID))

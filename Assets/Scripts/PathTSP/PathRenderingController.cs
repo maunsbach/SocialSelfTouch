@@ -55,6 +55,8 @@ public class PathRenderingController : MonoBehaviour
             Debug.DrawRay(InterpolatedPath[i], Vector3.up, Color.white);
         }*/
 
+        //Debug.Log(InterpolatedPath.Count);
+
         PathSensation.SetPath(InterpolatedPath);
     }
 
@@ -66,7 +68,7 @@ public class PathRenderingController : MonoBehaviour
         if (contactPoints.Count == 0)
         {
             // Stop emitter
-            PathSensation.SetEmptyPath();
+            //PathSensation.SetEmptyPath();
             return;
         }
 
@@ -141,6 +143,6 @@ public class PathRenderingController : MonoBehaviour
 
     private void TransformPosition(List<Vector3> contacts, int i)
     {
-        contacts[i] = new Vector3(contacts[i].x, contacts[i].z, contacts[i].y) + UltraLeapAlignment;
+        contacts[i] = new Vector3(contacts[i].x, contacts[i].z - UltraLeapAlignment.y, -contacts[i].y); //+ UltraLeapAlignment;
     }
 }
