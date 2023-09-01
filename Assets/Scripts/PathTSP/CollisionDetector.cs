@@ -45,10 +45,10 @@ public class CollisionDetector : MonoBehaviour
 
     private void SendContactPoints()
     {
-        /*if (_contactPoints.Values.Count > 0)
-        {
+        //if (_contactPoints.Values.Count > 0)
+        //{
             Debug.Log(_contactPoints.Values.Count);
-        }*/
+        //}
         _pathRenderingController.SetPoints(_contactPoints.Values.ToList());
         //_pathRecorder.SetPoints(_contactIDs.Values.ToArray(), _sampleTime);
         _sampleTime++;
@@ -110,8 +110,12 @@ public class CollisionDetector : MonoBehaviour
                 _contactPointCount.Remove(otherID);
             }
         }
+    }
 
-
+    public void DeleteAllContactPoints()
+    {
+        _contactPoints.Clear();
+        _contactPointCount.Clear();
     }
 
 }
