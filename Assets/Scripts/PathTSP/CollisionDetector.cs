@@ -47,11 +47,22 @@ public class CollisionDetector : MonoBehaviour
     {
         //if (_contactPoints.Values.Count > 0)
         //{
-            Debug.Log(_contactPoints.Values.Count);
+        //    Debug.Log(_contactPoints.Values.Count);
         //}
         _pathRenderingController.SetPoints(_contactPoints.Values.ToList());
         //_pathRecorder.SetPoints(_contactIDs.Values.ToArray(), _sampleTime);
         _sampleTime++;
+
+        Vector3[] list = _contactPoints.Values.ToArray();
+
+        if (DrawDebug)
+        {
+            for (int i = 0; i<list.Length; i++)
+            {
+                Vector3 p = list[i] + ReceiverServiceProvider.position;
+                Debug.DrawLine(p, p + 0.1f*Vector3.up, Color.red, 0.2f);
+            }
+        }
     }
 
     public void AddContactPoint(int otherID, Vector3 point, SphereID sphereID)
@@ -114,6 +125,7 @@ public class CollisionDetector : MonoBehaviour
 
     public void DeleteAllContactPoints()
     {
+        Debug.Log("Delete all contactpoints");
         _contactPoints.Clear();
         _contactPointCount.Clear();
     }

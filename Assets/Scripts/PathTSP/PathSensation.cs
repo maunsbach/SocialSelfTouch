@@ -78,7 +78,7 @@ public class PathSensation : MonoBehaviour
 
                 //Debug.Log("Pre: " + x + ", " + y + ", " + z);
                 //Debug.Log("Post: " + p.X + ", " + p.Y + ", " + p.Z);
-                p = new SVector3(0f, 0f, 0.2f);
+                //p = new SVector3(0f, 0f, 0.2f);
 
                 sample.Points[0].Position = p;
                 sample.Points[0].Intensity = Intensity;

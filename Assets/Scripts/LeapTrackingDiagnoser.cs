@@ -25,11 +25,11 @@ public class LeapTrackingDiagnoser : MonoBehaviour
 
         }
 
-        if (_handReceiverIsActive != HandSender.activeSelf)
+        if (_handReceiverIsActive != HandReceiver.activeSelf)
         {
-            _handReceiverIsActive = HandSender.activeSelf;
+            _handReceiverIsActive = HandReceiver.activeSelf;
 
-            if (HandSender.activeSelf == false)
+            if (HandReceiver.activeSelf == false)
             {
                 Disconnected();
             }

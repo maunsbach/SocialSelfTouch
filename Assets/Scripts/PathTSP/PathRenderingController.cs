@@ -143,6 +143,6 @@ public class PathRenderingController : MonoBehaviour
 
     private void TransformPosition(List<Vector3> contacts, int i)
     {
-        contacts[i] = new Vector3(contacts[i].x, contacts[i].z - UltraLeapAlignment.y, -contacts[i].y); //+ UltraLeapAlignment;
+        contacts[i] = new Vector3(contacts[i].x, -(contacts[i].z - UltraLeapAlignment.y), -contacts[i].y); //+ UltraLeapAlignment;
     }
 }
