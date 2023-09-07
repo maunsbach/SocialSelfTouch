@@ -6,8 +6,8 @@ using System.Collections.Generic;
 
 public class PathSensation : MonoBehaviour
 {
-    public Vector3 CenterPoint = new Vector3(0f, 0f, 0.2f);
-    private Ultraleap.Haptics.Transform KitTransform;
+    public string UHDeviceID = "USX:00000705";
+    public bool DebugOn;
 
     public float Intensity = 1f;
 
@@ -27,7 +27,7 @@ public class PathSensation : MonoBehaviour
         lib.Connect();
         // Receiver: "USX:00000705"
         // Sender: "USX:000008DB"
-        using IDevice device = lib.FindDevice("USX:00000705");
+        using IDevice device = lib.FindDevice(UHDeviceID);
         _emitter = new StreamingEmitter(lib);
         _emitter.Devices.Add(device);
         Debug.Log(device.Identifier);
@@ -66,19 +66,14 @@ public class PathSensation : MonoBehaviour
 
         try
         {
+            var p = new SVector3(x, y, z);
+
             foreach (var sample in interval)
             {
                 x = _path[_pointIncrement].x;
                 y = _path[_pointIncrement].y;
                 z = _path[_pointIncrement].z;
 
-                var p = new SVector3(x, y, z);
-
-                //p = _transform.TransformPosition(p);
-
-                //Debug.Log("Pre: " + x + ", " + y + ", " + z);
-                //Debug.Log("Post: " + p.X + ", " + p.Y + ", " + p.Z);
-                //p = new SVector3(0f, 0f, 0.2f);
 
                 sample.Points[0].Position = p;
                 sample.Points[0].Intensity = Intensity;
@@ -89,6 +84,10 @@ public class PathSensation : MonoBehaviour
                 {
                     _pointIncrement = 0;
                 }
+            }
+            if (DebugOn)
+            {
+                Debug.Log("Post: " + p.X + ", " + p.Y + ", " + p.Z);
             }
         }
         catch (Exception e)

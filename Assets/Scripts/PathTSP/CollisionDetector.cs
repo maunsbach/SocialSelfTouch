@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class CollisionDetector : MonoBehaviour
 {
-    public Transform ReceiverServiceProvider;
-
     private PathRenderingController _pathRenderingController;
+    public PathRenderingController _senderPathRenderingController;
     private PathRecorder _pathRecorder;
 
     public bool DrawDebug;
@@ -50,6 +49,7 @@ public class CollisionDetector : MonoBehaviour
         //    Debug.Log(_contactPoints.Values.Count);
         //}
         _pathRenderingController.SetPoints(_contactPoints.Values.ToList());
+        _senderPathRenderingController.SetPoints(_contactPoints.Values.ToList());
         //_pathRecorder.SetPoints(_contactIDs.Values.ToArray(), _sampleTime);
         _sampleTime++;
 
@@ -59,7 +59,7 @@ public class CollisionDetector : MonoBehaviour
         {
             for (int i = 0; i<list.Length; i++)
             {
-                Vector3 p = list[i] + ReceiverServiceProvider.position;
+                Vector3 p = list[i];
                 Debug.DrawLine(p, p + 0.1f*Vector3.up, Color.red, 0.2f);
             }
         }
@@ -67,7 +67,6 @@ public class CollisionDetector : MonoBehaviour
 
     public void AddContactPoint(int otherID, Vector3 point, SphereID sphereID)
     {
-        point = point - ReceiverServiceProvider.position;
         if (_contactPoints.ContainsKey(otherID))
         {
             if (_contactPointCount.ContainsKey(otherID))
@@ -87,7 +86,7 @@ public class CollisionDetector : MonoBehaviour
         }
     }
 
-    public void AddContactPoint(int otherID, Vector3 point)
+    /*public void AddContactPoint(int otherID, Vector3 point)
     {
         point = point - ReceiverServiceProvider.position;
         if (_contactPoints.ContainsKey(otherID))
@@ -106,7 +105,7 @@ public class CollisionDetector : MonoBehaviour
             _contactPoints.Add(otherID, point);
             _contactPointCount.Add(otherID, 1);
         }
-    }
+    }*/
 
     public void RemoveContactPoint(int otherID)
     {
@@ -125,7 +124,6 @@ public class CollisionDetector : MonoBehaviour
 
     public void DeleteAllContactPoints()
     {
-        Debug.Log("Delete all contactpoints");
         _contactPoints.Clear();
         _contactPointCount.Clear();
     }

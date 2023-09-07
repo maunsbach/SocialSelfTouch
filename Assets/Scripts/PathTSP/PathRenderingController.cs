@@ -8,12 +8,15 @@ public class PathRenderingController : MonoBehaviour
 {
     public PathSensation PathSensation;
 
+    public Transform ServiceProvider;
+    public bool IsSender;
+
     public float MinSmoothingSeparation = 0.007f;
 
     public float MaxPathLength = 0.2f;
     public float InterpolationSeparation = 0.000175f;
 
-    private Vector3 UltraLeapAlignment = new Vector3(0f, 0.1105f, 0f);
+    private Vector3 UltraLeapAlignment = new Vector3(0f, 0.1210f, 0f);
 
     private Vector3 _transformPosition;
     public Transform PointOffset;
@@ -131,18 +134,34 @@ public class PathRenderingController : MonoBehaviour
     {
         for (int i = 0; i < contacts.Count; i++)
         {
-            //OffsetPosition(contacts, i);
+            OffsetPosition(contacts, i);
             TransformPosition(contacts, i);
         }
     }
 
     private void OffsetPosition(List<Vector3> contacts, int i)
     {
-        //contacts[i] = contacts[i] - PointOffset.position;
+        if (IsSender)
+        {
+            contacts[i] -= ServiceProvider.position;
+        }
+        else
+        {
+            contacts[i] -= ServiceProvider.position;
+        }
     }
 
     private void TransformPosition(List<Vector3> contacts, int i)
     {
-        contacts[i] = new Vector3(contacts[i].x, -(contacts[i].z - UltraLeapAlignment.y), -contacts[i].y); //+ UltraLeapAlignment;
+        if (IsSender)
+        {
+            contacts[i] = new Vector3(contacts[i].x, -(-contacts[i].z - UltraLeapAlignment.y), contacts[i].y); //+ UltraLeapAlignment.y
+        }
+        else
+        {
+            contacts[i] = new Vector3(contacts[i].x, -contacts[i].z + UltraLeapAlignment.y, -contacts[i].y); //+ UltraLeapAlignment;
+        }
+
+
     }
 }
