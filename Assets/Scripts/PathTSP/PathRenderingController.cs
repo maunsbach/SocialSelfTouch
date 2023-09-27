@@ -21,9 +21,9 @@ public class PathRenderingController : MonoBehaviour
     private Vector3 _transformPosition;
     public Transform PointOffset;
 
-    private List<Vector3> Points;
+    private List<Vector3> Points = new List<Vector3>();
     //public List<Vector3> PointsPreTSP;
-    public List<Vector3> PointsTSP;
+    public List<Vector3> DebugPointsTSP;
 
     //public List<Vector3> Cluster1Points = new List<Vector3>();
     //public List<Vector3> Cluster2Points = new List<Vector3>();
@@ -47,7 +47,7 @@ public class PathRenderingController : MonoBehaviour
         float distance = MathT.TwoOpt(ref Points);
         //TwoOptRecursive(Points);
 
-        //PointsTSP = new List<Vector3>(Points);
+        //DebugPointsTSP = new List<Vector3>(Points);
 
         InterpolatedPath.Clear();
         InterpolatedPath = MathT.InterpolatePaths(Points, InterpolationSeparation);
@@ -70,8 +70,14 @@ public class PathRenderingController : MonoBehaviour
     {
         if (contactPoints.Count == 0)
         {
+            //Debug.Log("Empty");
             // Stop emitter
             //PathSensation.SetEmptyPath();
+            Paths.Clear();
+            InterpolatedPath.Clear();
+            Points.Clear();
+            //DebugPointsTSP.Clear();
+            PathSensation.SetPath(new List<Vector3>());
             return;
         }
 
@@ -155,11 +161,11 @@ public class PathRenderingController : MonoBehaviour
     {
         if (IsSender)
         {
-            contacts[i] = new Vector3(contacts[i].x, -(-contacts[i].z - UltraLeapAlignment.y), contacts[i].y); //+ UltraLeapAlignment.y
+            contacts[i] = new Vector3(contacts[i].x, -(-contacts[i].z - UltraLeapAlignment.y), contacts[i].y);
         }
         else
         {
-            contacts[i] = new Vector3(contacts[i].x, -contacts[i].z + UltraLeapAlignment.y, -contacts[i].y); //+ UltraLeapAlignment;
+            contacts[i] = new Vector3(contacts[i].x, -contacts[i].z + UltraLeapAlignment.y, -contacts[i].y);
         }
 
 

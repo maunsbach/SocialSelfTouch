@@ -36,7 +36,7 @@ public class PointPipe : MonoBehaviour
 
     private void SendContactPoints()
     {
-        _pathRenderingController.SetPoints(new List<Vector3>(_contactPoints));
+        //_pathRenderingController.SetPoints(new List<Vector3>(_contactPoints));
     }
 
     public void AddContactPoint(Vector3 point)

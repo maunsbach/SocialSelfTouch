@@ -19,6 +19,8 @@ public class CollisionDetector : MonoBehaviour
     private Dictionary<int, SphereID> _contactIDs = new Dictionary<int, SphereID>();
     private Dictionary<int, int> _contactPointCount = new Dictionary<int, int>();
 
+    public List<Vector3> DebugList = new List<Vector3>();
+
     private void Awake()
     {
         _samplingRate = SamplingRate.Value;
@@ -48,6 +50,7 @@ public class CollisionDetector : MonoBehaviour
         //{
         //    Debug.Log(_contactPoints.Values.Count);
         //}
+        //DebugList = _contactPoints.Values.ToList();
         _pathRenderingController.SetPoints(_contactPoints.Values.ToList());
         _senderPathRenderingController.SetPoints(_contactPoints.Values.ToList());
         //_pathRecorder.SetPoints(_contactIDs.Values.ToArray(), _sampleTime);
@@ -109,6 +112,8 @@ public class CollisionDetector : MonoBehaviour
 
     public void RemoveContactPoint(int otherID)
     {
+        
+
         if (_contactPoints.ContainsKey(otherID))
         {
             _contactPointCount[otherID]--;
