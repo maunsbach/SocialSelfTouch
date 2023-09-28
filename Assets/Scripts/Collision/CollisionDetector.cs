@@ -130,6 +130,7 @@ public class CollisionDetector : MonoBehaviour
     public void DeleteAllContactPoints()
     {
         _contactPoints.Clear();
+        _contactIDs.Clear();
         _contactPointCount.Clear();
     }
 

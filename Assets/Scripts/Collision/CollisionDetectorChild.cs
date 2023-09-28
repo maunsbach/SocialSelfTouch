@@ -7,6 +7,8 @@ public class CollisionDetectorChild : MonoBehaviour
 {
     private CollisionDetector _collisionDetector;
 
+    public bool isEnabled = true;
+
     private void Awake()
     {
         Physics.reuseCollisionCallbacks = true;
@@ -17,6 +19,11 @@ public class CollisionDetectorChild : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (isEnabled == false)
+        {
+            return;
+        }
+
         int otherID = other.gameObject.GetInstanceID();
         SphereID sphereID = other.gameObject.GetComponent<SphereID>();
         _collisionDetector.AddContactPoint(otherID, other.transform.position, sphereID);
@@ -26,6 +33,11 @@ public class CollisionDetectorChild : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
+        if (isEnabled == false)
+        {
+            return;
+        }
+
         int otherID = other.gameObject.GetInstanceID();
         _collisionDetector.RemoveContactPoint(otherID);
 
