@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CollisionDetector : MonoBehaviour
 {
-    private PathRenderingController _pathRenderingController;
+    private PathRenderingController _receiverRenderingController;
     public PathRenderingController _senderPathRenderingController;
     private PathRecorder _pathRecorder;
 
@@ -27,7 +27,7 @@ public class CollisionDetector : MonoBehaviour
         //Physics.reuseCollisionCallbacks = true;
         //GameObject PathBrain = GameObject.Find("PathBrain");
 
-        _pathRenderingController = gameObject.GetComponent<PathRenderingController>();
+        _receiverRenderingController = gameObject.GetComponent<PathRenderingController>();
         _pathRecorder = gameObject.GetComponent<PathRecorder>();
 
 
@@ -51,7 +51,7 @@ public class CollisionDetector : MonoBehaviour
         //    Debug.Log(_contactPoints.Values.Count);
         //}
         //DebugList = _contactPoints.Values.ToList();
-        _pathRenderingController.SetPoints(_contactPoints.Values.ToList());
+        _receiverRenderingController.SetPoints(_contactPoints.Values.ToList());
         _senderPathRenderingController.SetPoints(_contactPoints.Values.ToList());
         //_pathRecorder.SetPoints(_contactIDs.Values.ToArray(), _sampleTime);
         _sampleTime++;
@@ -112,8 +112,6 @@ public class CollisionDetector : MonoBehaviour
 
     public void RemoveContactPoint(int otherID)
     {
-        
-
         if (_contactPoints.ContainsKey(otherID))
         {
             _contactPointCount[otherID]--;

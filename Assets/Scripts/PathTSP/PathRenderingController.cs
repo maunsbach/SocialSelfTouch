@@ -70,18 +70,14 @@ public class PathRenderingController : MonoBehaviour
     {
         if (contactPoints.Count == 0)
         {
-            //Debug.Log("Empty");
-            // Stop emitter
-            //PathSensation.SetEmptyPath();
             Paths.Clear();
             InterpolatedPath.Clear();
             Points.Clear();
-            //DebugPointsTSP.Clear();
             PathSensation.SetPath(new List<Vector3>());
             return;
         }
 
-        time1 = Time.realtimeSinceStartup;
+        //time1 = Time.realtimeSinceStartup;
         //List<Vector3> contacts = FromContactPointsToVector3(contactPoints);
 
         TransformContacts(contactPoints);
@@ -147,14 +143,7 @@ public class PathRenderingController : MonoBehaviour
 
     private void OffsetPosition(List<Vector3> contacts, int i)
     {
-        if (IsSender)
-        {
             contacts[i] -= ServiceProvider.position;
-        }
-        else
-        {
-            contacts[i] -= ServiceProvider.position;
-        }
     }
 
     private void TransformPosition(List<Vector3> contacts, int i)

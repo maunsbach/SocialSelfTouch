@@ -17,8 +17,7 @@ public class LimbEnableSelector : MonoBehaviour
     public bool IndexC = true;
     private bool[] IndexBools;
 
-    [Space(10)] // 10 pixels of spacing here.
-
+    [Space(10)]
     public GameObject[] Middle = new GameObject[4];
     public bool MiddleMeta;
     public bool MiddleA;
@@ -49,25 +48,23 @@ public class LimbEnableSelector : MonoBehaviour
     public bool ThumbB;
     private bool[] ThumbBools;
 
-    private bool boolArraysInitiated = false;
-
     void OnValidate()
     {
 
-        //if (boolArraysInitiated == false)
-        //{
-        //}
+        CheckUpdateAll();
+        UpdateBoolArrays();
+        UpdateCollisionDetectors();
 
+
+    }
+
+    private void CheckUpdateAll()
+    {
         if (_all != All)
         {
             _all = All;
             ToggleAll(All);
         }
-
-        UpdateBoolArrays();
-        UpdateCollisionDetectors();
-
-
     }
 
     private void UpdateCollisionDetectors()
@@ -118,6 +115,5 @@ public class LimbEnableSelector : MonoBehaviour
         RingBools = new bool[] { RingMeta, RingA, RingB, RingC };
         PinkyBools = new bool[] { PinkyMeta, PinkyA, PinkyB, PinkyC };
         ThumbBools = new bool[] { ThumbMeta, ThumbA, ThumbB };
-        boolArraysInitiated = true;
     }
 }

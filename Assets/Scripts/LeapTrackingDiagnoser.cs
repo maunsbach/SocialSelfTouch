@@ -39,7 +39,6 @@ public class LeapTrackingDiagnoser : MonoBehaviour
 
     private void Disconnected()
     {
-        Debug.Log("Hand Disconnected");
         collisionDetector.DeleteAllContactPoints();
     }
 }
