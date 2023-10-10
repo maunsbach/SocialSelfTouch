@@ -37196,7 +37196,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PathInterpolator: {fileID: 857646426}
-  ServiceProvider: {fileID: 1898251323}
   IsSender: 0
   MinSmoothingSeparation: 0.007
   PointOffset: {fileID: 0}
@@ -37318,8 +37317,9 @@ MonoBehaviour:
   SenderCoordinateSpaceTransformer: {fileID: 523604126}
   MaxPathLength: 0.2
   DefaultInterpolationSeparation: 0.00035
-  MinimumFrequency: 60
-  MaximumFrequency: 200
+  MinimumFrequency: 80
+  MaximumFrequency: 250
+  DynamicCapping: 1
 --- !u!1 &860937454
 GameObject:
   m_ObjectHideFlags: 0
