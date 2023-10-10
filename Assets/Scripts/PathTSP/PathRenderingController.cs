@@ -6,15 +6,10 @@ using UnityEngine;
 
 public class PathRenderingController : MonoBehaviour
 {
-    public PathSensation PathSensation;
-
-    public Transform ServiceProvider;
+    public PathInterpolator PathInterpolator;
     public bool IsSender;
 
     public float MinSmoothingSeparation = 0.007f;
-
-    public float MaxPathLength = 0.2f;
-    public float InterpolationSeparation = 0.000175f;
 
     private Vector3 UltraLeapAlignment = new Vector3(0f, 0.1210f, 0f);
 
@@ -31,7 +26,8 @@ public class PathRenderingController : MonoBehaviour
     public List<List<Vector3>> Paths = new List<List<Vector3>>();
     public List<float> PathLengths = new List<float>();
 
-    private List<Vector3> InterpolatedPath = new List<Vector3>();
+    //private List<Vector3> InterpolatedPath = new List<Vector3>();
+
 
     private void StartTSP(List<Vector3> contacts)
     {
@@ -42,52 +38,26 @@ public class PathRenderingController : MonoBehaviour
 
         Points = new List<Vector3>(contacts);
 
-
         Points.Add(Points[0]);
         float distance = MathT.TwoOpt(ref Points);
         //TwoOptRecursive(Points);
 
         //DebugPointsTSP = new List<Vector3>(Points);
 
-        InterpolatedPath.Clear();
-        InterpolatedPath = MathT.InterpolatePaths(Points, InterpolationSeparation);
-
-        //Debug.Log(InterpolatedPath.Count);
-        /*for (int i = 0; i < InterpolatedPath.Count; i++)
-        {
-            Debug.DrawRay(InterpolatedPath[i], Vector3.up, Color.white);
-        }*/
-
-        //Debug.Log(InterpolatedPath.Count);
-
-        PathSensation.SetPath(InterpolatedPath);
+        PathInterpolator.InterpolatePath(Points, distance);
     }
-
-    float time1;
-    float time2;
 
     public void SetPoints(List<Vector3> contactPoints)
     {
         if (contactPoints.Count == 0)
         {
             Paths.Clear();
-            InterpolatedPath.Clear();
             Points.Clear();
-            PathSensation.SetPath(new List<Vector3>());
+            PathInterpolator.InterpolatePath(new List<Vector3>(), 0f);
             return;
         }
 
-        //time1 = Time.realtimeSinceStartup;
-        //List<Vector3> contacts = FromContactPointsToVector3(contactPoints);
-
-        TransformContacts(contactPoints);
-
         StartTSP(contactPoints);
-
-        time2 = Time.realtimeSinceStartup;
-
-        //Debug.Log(contacts.Count + ", " + (time2 - time1));
-
     }
 
     private List<Vector3> FromContactPointsToVector3(ContactPoint[] contactPoints)
@@ -102,16 +72,17 @@ public class PathRenderingController : MonoBehaviour
         return contacts;
     }
 
-    private void TwoOptRecursive(List<Vector3> path)
+    /*private void TwoOptRecursive(List<Vector3> path)
     {
         float distance = MathT.TwoOpt(ref path);
+        Debug.Log(distance);
 
-        //if (distance < MaxPathLength || path.Count <= 3)
-        //{
-            //path.Add(path[0]);
+        if (distance < MaxPathLength || path.Count <= 3)
+        {
+            path.Add(path[0]);
             Paths.Add(path);
-        /*}
-        
+        }
+        else 
         {
             KMeansResults result = KMeans.Cluster(path, 2, 50, 0);
 
@@ -128,35 +99,6 @@ public class PathRenderingController : MonoBehaviour
                 cluster2.Add(path[result.clusters[1][i]]);
             }
             TwoOptRecursive(cluster2);
-
-        }*/
-    }
-
-    private void TransformContacts(List<Vector3> contacts)
-    {
-        for (int i = 0; i < contacts.Count; i++)
-        {
-            OffsetPosition(contacts, i);
-            TransformPosition(contacts, i);
         }
-    }
-
-    private void OffsetPosition(List<Vector3> contacts, int i)
-    {
-            contacts[i] -= ServiceProvider.position;
-    }
-
-    private void TransformPosition(List<Vector3> contacts, int i)
-    {
-        if (IsSender)
-        {
-            contacts[i] = new Vector3(contacts[i].x, -(-contacts[i].z - UltraLeapAlignment.y), contacts[i].y);
-        }
-        else
-        {
-            contacts[i] = new Vector3(contacts[i].x, -contacts[i].z + UltraLeapAlignment.y, -contacts[i].y);
-        }
-
-
-    }
+    }*/
 }

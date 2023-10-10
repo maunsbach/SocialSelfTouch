@@ -24,13 +24,10 @@ public class CollisionDetector : MonoBehaviour
     private void Awake()
     {
         _samplingRate = SamplingRate.Value;
-        //Physics.reuseCollisionCallbacks = true;
         //GameObject PathBrain = GameObject.Find("PathBrain");
 
         _receiverRenderingController = gameObject.GetComponent<PathRenderingController>();
         _pathRecorder = gameObject.GetComponent<PathRecorder>();
-
-
     }
 
     void FixedUpdate()
@@ -46,20 +43,15 @@ public class CollisionDetector : MonoBehaviour
 
     private void SendContactPoints()
     {
-        //if (_contactPoints.Values.Count > 0)
-        //{
-        //    Debug.Log(_contactPoints.Values.Count);
-        //}
-        //DebugList = _contactPoints.Values.ToList();
         _receiverRenderingController.SetPoints(_contactPoints.Values.ToList());
-        _senderPathRenderingController.SetPoints(_contactPoints.Values.ToList());
+        //_senderPathRenderingController.SetPoints(_contactPoints.Values.ToList());
         //_pathRecorder.SetPoints(_contactIDs.Values.ToArray(), _sampleTime);
-        _sampleTime++;
+        //_sampleTime++;
 
-        Vector3[] list = _contactPoints.Values.ToArray();
 
         if (DrawDebug)
         {
+            Vector3[] list = _contactPoints.Values.ToArray();
             for (int i = 0; i<list.Length; i++)
             {
                 Vector3 p = list[i];

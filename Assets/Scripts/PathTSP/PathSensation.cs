@@ -67,7 +67,6 @@ public class PathSensation : MonoBehaviour
         try
         {
             var p = new SVector3(x, y, z);
-
             foreach (var sample in interval)
             {
                 x = _path[_pointIncrement].x;
