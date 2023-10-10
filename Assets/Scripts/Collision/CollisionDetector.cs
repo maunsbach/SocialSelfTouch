@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CollisionDetector : MonoBehaviour
 {
-    private PathRenderingController _receiverRenderingController;
+    private PathRenderingController _renderingController;
     public PathRenderingController _senderPathRenderingController;
     private PathRecorder _pathRecorder;
 
@@ -26,7 +26,7 @@ public class CollisionDetector : MonoBehaviour
         _samplingRate = SamplingRate.Value;
         //GameObject PathBrain = GameObject.Find("PathBrain");
 
-        _receiverRenderingController = gameObject.GetComponent<PathRenderingController>();
+        _renderingController = gameObject.GetComponent<PathRenderingController>();
         _pathRecorder = gameObject.GetComponent<PathRecorder>();
     }
 
@@ -43,7 +43,7 @@ public class CollisionDetector : MonoBehaviour
 
     private void SendContactPoints()
     {
-        _receiverRenderingController.SetPoints(_contactPoints.Values.ToList());
+        _renderingController.SetPoints(_contactPoints.Values.ToList());
         //_senderPathRenderingController.SetPoints(_contactPoints.Values.ToList());
         //_pathRecorder.SetPoints(_contactIDs.Values.ToArray(), _sampleTime);
         //_sampleTime++;
