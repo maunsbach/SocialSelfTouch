@@ -12,6 +12,9 @@ public class PathRenderingController : MonoBehaviour
 
     private List<Vector3> Points = new List<Vector3>();
 
+    float time1;
+    float time2;
+
     private void StartTSP(List<Vector3> contacts)
     {
         MathT.SmoothPoints(contacts, MinSmoothingSeparation);
@@ -19,7 +22,12 @@ public class PathRenderingController : MonoBehaviour
         Points = new List<Vector3>(contacts);
         Points.Add(Points[0]);
 
+        time1 = Time.realtimeSinceStartup;
+
         float distance = MathT.TwoOpt(ref Points);
+
+        time2 = Time.realtimeSinceStartup;
+        //Debug.Log(time2 - time1);
 
         PathInterpolator.InterpolatePath(Points, distance);
     }

@@ -28,7 +28,6 @@ public static class MathT
     public static float TwoOpt(ref List<Vector3> points)
     {
         float bestDistance = CalculateTotalDistance(points);
-        //Debug.Log(bestDistance);
         float newDistance;
         int n = points.Count - 1;
         List<Vector3> newRoute;

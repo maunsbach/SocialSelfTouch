@@ -40,7 +40,7 @@ public class PathInterpolator : MonoBehaviour
             _interpolationSeparation = DefaultInterpolationSeparation;
         }
 
-        InterpolatedPath.Clear();
+
         InterpolatedPath = MathT.InterpolatePaths(path, _interpolationSeparation);
 
         ReceiverCoordinateSpaceTransformer.TransformPath(new List<Vector3>(InterpolatedPath));
