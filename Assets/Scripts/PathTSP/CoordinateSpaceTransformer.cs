@@ -9,6 +9,8 @@ public class CoordinateSpaceTransformer : MonoBehaviour
     public bool IsSender;
     private Vector3 UltraLeapAlignment = new Vector3(0f, 0.1210f, 0f);
 
+    public Vector3 ManualAlignment = new Vector3(0f, 0f, 0f);
+
     public void TransformPath(List<Vector3> path)
     {
         //Debug.Log(path.Count);
@@ -24,6 +26,7 @@ public class CoordinateSpaceTransformer : MonoBehaviour
         {
             OffsetPosition(contacts, i);
             TransformPosition(contacts, i);
+            ManualPositionAlignment(contacts, i);
         }
     }
 
@@ -42,5 +45,10 @@ public class CoordinateSpaceTransformer : MonoBehaviour
         {
             contacts[i] = new Vector3(contacts[i].x, -contacts[i].z + UltraLeapAlignment.y, -contacts[i].y);
         }
+    }
+
+    private void ManualPositionAlignment(List<Vector3> contacts, int i)
+    {
+        contacts[i] += ManualAlignment;
     }
 }
